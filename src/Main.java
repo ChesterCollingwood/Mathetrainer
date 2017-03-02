@@ -1,9 +1,10 @@
+import controller.Controller;
+import view.View;
 
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		View view = new View();
+		new Controller(view);
 	}
-
 }
