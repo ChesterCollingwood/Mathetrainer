@@ -22,6 +22,8 @@ public class Controller {
 		menu.getDivisionBtn().addActionListener(listener -> showDivision());
 		menu.getFractionBtn().addActionListener(listener -> showFraction());
 		menu.getPercentBtn().addActionListener(listener -> showPercent());
+		
+		main.getReturnBtn().addActionListener(listener -> returnToPreload());
 	}
 	
 	//Methoden zum Zeigen des jeweiligen ausgewählten Panels
@@ -38,5 +40,10 @@ public class Controller {
 	public void showPercent() {
 		main.showPercentFrame();
 		menu.setVisible(false);
+	}
+	
+	public void returnToPreload() {
+		menu.setVisible(true);
+		main.setVisible(false);
 	}
 }
