@@ -1,10 +1,10 @@
 import controller.Controller;
-import view.View;
+import view.Preloader;
 
 public class Main {
 
 	public static void main(String[] args) {
-		View view = new View();
-		new Controller(view);
+		Preloader menu = new Preloader();
+		new Controller(menu);
 	}
 }
