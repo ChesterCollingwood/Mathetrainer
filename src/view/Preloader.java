@@ -16,6 +16,7 @@ public class Preloader extends JFrame {
 
 	public Preloader() {
 		createVisibles();
+		setTitle("Mathetrainer");
 		
 		add(preloadPane);
 		

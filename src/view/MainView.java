@@ -9,17 +9,35 @@ public class MainView extends JFrame{
 	private JPanel divisionPane, fractionPane, percentPane;
 	
 	public MainView() {	
-		
+		createVisibles();
 		
 		//setzt die standard Schließen-Operation, Sichtbarkeit und Größe des Fensters
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
-		setSize(600, 6000);
+		setVisible(false);
+		setSize(600, 600);
 	}
 	
 	public void createVisibles() {
 		divisionPane = new JPanel();
 		fractionPane = new JPanel();
 		percentPane = new JPanel();
+	}
+	
+	public void showDivisionFrame() {
+		add(divisionPane);
+		setTitle("Division üben");
+		setVisible(true);
+	}
+	
+	public void showPercentFrame() {
+		add(percentPane);
+		setTitle("Prozentrechnung üben");
+		setVisible(true);
+	}
+	
+	public void showFractionFrame() {
+		add(fractionPane);
+		setTitle("Bruchrechnung üben");
+		setVisible(true);
 	}
 }
