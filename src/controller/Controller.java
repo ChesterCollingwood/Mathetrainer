@@ -9,6 +9,7 @@ public class Controller {
 	private Preloader menu;
 	private MainView main;
 	private Data data;
+	private String calcCase = null;
 	
 	public Controller(Preloader menu) {
 		//weist dem Controller den übergebenen Preloader zu
@@ -18,30 +19,30 @@ public class Controller {
 		main = new MainView();
 		data = new Data();
 		
-		//weist den Buttons aus der View eine Methode beim Klicken zu
-		menu.getDivisionBtn().addActionListener(listener -> showDivision());
-		menu.getFractionBtn().addActionListener(listener -> showFraction());
-		menu.getPercentBtn().addActionListener(listener -> showPercent());
+		//weist den Buttons einen ActionListener zu, setzt die gewünschte Rechenoperation
+		menu.getDivisionBtn().addActionListener(e -> {
+			calcCase = "Division üben";
+			showCalcFrame();
+		});
+		menu.getFractionBtn().addActionListener(e -> {
+			calcCase = "Bruchrechnung üben";
+			showCalcFrame();
+		});
+		menu.getPercentBtn().addActionListener(e -> {
+			calcCase = "Prozentrechnung üben";
+			showCalcFrame();
+		});
 		
 		main.getReturnBtn().addActionListener(listener -> returnToPreload());
 	}
 	
-	//Methoden zum Zeigen des jeweiligen ausgewählten Panels
-	public void showDivision() {
-		main.showDivisionFrame();
+	//Methoden zum Zeigen des Panels
+	public void showCalcFrame() {	
+		main.showMainFrame(calcCase);
 		menu.setVisible(false);
 	}
 	
-	public void showFraction() {
-		main.showFractionFrame();
-		menu.setVisible(false);
-	}
-	
-	public void showPercent() {
-		main.showPercentFrame();
-		menu.setVisible(false);
-	}
-	
+	//Methode zum Zurückkehren zur Preload-View
 	public void returnToPreload() {
 		menu.setVisible(true);
 		main.setVisible(false);

@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 public class MainView extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-	private JPanel divisionPane, fractionPane, percentPane;
+	private JPanel mainPane;
 	private JButton returnToPreload;
 	
 	public MainView() {	
@@ -15,14 +15,8 @@ public class MainView extends JFrame{
 		createVisibles();
 		
 		//fügt dem Frame die Panel hinzu und den Paneln alle sichtbaren Elemente
-		add(divisionPane);
-		divisionPane.add(returnToPreload);
-		
-		add(percentPane);
-		percentPane.add(returnToPreload);
-				
-		add(fractionPane);
-		fractionPane.add(returnToPreload);
+		add(mainPane);
+		mainPane.add(returnToPreload);
 				
 		//setzt die standard Schließen-Operation, Sichtbarkeit und Größe des Fensters
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -32,44 +26,18 @@ public class MainView extends JFrame{
 	
 	//initialisiert die sichtbaren Elemente
 	public void createVisibles() {
-		divisionPane = new JPanel();
-		fractionPane = new JPanel();
-		percentPane = new JPanel();
-		
-		divisionPane.setVisible(false);
-		fractionPane.setVisible(false);
-		percentPane.setVisible(false);
+		mainPane = new JPanel();
 		
 		returnToPreload = new JButton("zurück zum Auswahlbildschirm");
 	}
 	
-	//zeigt das Panel für die Division
-	public void showDivisionFrame() {
-		//definiert das Frame
-		setTitle("Division üben");
+	//zeigt das Panel
+	public void showMainFrame(String calcCase) {
+		//zeigt den Titel auf Basis der ausgewählten Operation an
+		setTitle(calcCase);
 		
 		//setzt die Sichtbarkeiten
-		divisionPane.setVisible(true);
-		setVisible(true);
-	}
-	
-	//zeigt das Panel für die Prozentrechnung
-	public void showPercentFrame() {
-		//definiert das Frame
-		setTitle("Prozentrechnung üben");
-		
-		//setzt die Sichtbarkeiten
-		percentPane.setVisible(true);
-		setVisible(true);
-	}
-	
-	//zeigt das Panel für die Bruchrechnung
-	public void showFractionFrame() {
-		//definiert das Frame
-		setTitle("Bruchrechnung üben");
-		
-		//setzt die Sichtbarkeiten
-		fractionPane.setVisible(true);
+		mainPane.setVisible(true);
 		setVisible(true);
 	}
 	
