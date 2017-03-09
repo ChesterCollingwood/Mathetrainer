@@ -9,13 +9,14 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MainView extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-	private JPanel mainPane, upperPane, lowerPane, rightPane;
-	private JButton returnBtn, cancelBtn, calculateBtn, exampleOneBtn, exampleTwoBtn, exampleThreeBtn, exampleOwnBtn;
+	private JPanel mainPane, upperPane, rightPane;
+	private JButton returnBtn, cancelBtn, calculateBtn, generateBtn;
 	
 	public MainView() {	
 		//erstellt alle sichtbaren Elemente
@@ -24,35 +25,25 @@ public class MainView extends JFrame{
 		//fügt dem Frame die Panel hinzu und den Paneln alle sichtbaren Elemente
 		add(mainPane);
 		mainPane.add(upperPane, BorderLayout.CENTER);
-		mainPane.add(lowerPane, BorderLayout.SOUTH);
 		upperPane.add(rightPane, BorderLayout.EAST);
 		
-		lowerPane.add(Box.createHorizontalGlue());
-		lowerPane.add(calculateBtn);
-		lowerPane.add(Box.createHorizontalStrut(35));
-		lowerPane.add(cancelBtn);
-		lowerPane.add(Box.createHorizontalStrut(35));
-		lowerPane.add(returnBtn);
-		lowerPane.add(Box.createHorizontalGlue());
+		rightPane.add(Box.createVerticalGlue());
+		rightPane.add(generateBtn);
+		rightPane.add(Box.createVerticalStrut(20));
+		rightPane.add(calculateBtn);
+		rightPane.add(Box.createVerticalStrut(20));
+		rightPane.add(cancelBtn);
+		rightPane.add(Box.createVerticalStrut(20));
+		rightPane.add(returnBtn);
+		rightPane.add(Box.createVerticalGlue());
 		
-		rightPane.add(Box.createVerticalGlue());
-		rightPane.add(exampleOneBtn);
-		rightPane.add(Box.createVerticalStrut(20));
-		rightPane.add(exampleTwoBtn);
-		rightPane.add(Box.createVerticalStrut(20));
-		rightPane.add(exampleThreeBtn);
-		rightPane.add(Box.createVerticalStrut(20));
-		rightPane.add(exampleOwnBtn);
-		rightPane.add(Box.createVerticalGlue());
 		
 		//definiert die Panels
 		//Umrandung		
 		upperPane.setBorder(BorderFactory.createEtchedBorder());
-		lowerPane.setBorder(BorderFactory.createEtchedBorder());
 		rightPane.setBorder(BorderFactory.createEtchedBorder());
 		
 		//Größe
-		lowerPane.setPreferredSize(new Dimension(mainPane.getWidth(), 50));
 		rightPane.setPreferredSize(new Dimension(150, upperPane.getHeight()));
 		
 		//setzt die standard Schließen-Operation, Sichtbarkeit und Größe des Fensters
@@ -69,19 +60,13 @@ public class MainView extends JFrame{
 		upperPane = new JPanel();
 		upperPane.setLayout(new BorderLayout());
 		
-		lowerPane = new JPanel();
-		lowerPane.setLayout(new BoxLayout(lowerPane, BoxLayout.LINE_AXIS));
-		
 		rightPane = new JPanel();
 		rightPane.setLayout(new BoxLayout(rightPane, BoxLayout.PAGE_AXIS));
 		
 		returnBtn = new JButton("Zurück");
 		cancelBtn = new JButton("Löschen");
 		calculateBtn = new JButton("Berechnen");
-		exampleOneBtn = new JButton("Beispiel 1");
-		exampleTwoBtn = new JButton("Beispiel 2");
-		exampleThreeBtn = new JButton("Beispiel 3");
-		exampleOwnBtn = new JButton("Eigenes");
+		generateBtn = new JButton("Generieren");
 		
 		//definiert die Buttons
 		Dimension maxSizeButtons = new Dimension(150, 40);
@@ -90,18 +75,12 @@ public class MainView extends JFrame{
 		returnBtn.setMaximumSize(maxSizeButtons);
 		cancelBtn.setMaximumSize(maxSizeButtons);
 		calculateBtn.setMaximumSize(maxSizeButtons);
-		exampleOneBtn.setMaximumSize(maxSizeButtons);
-		exampleTwoBtn.setMaximumSize(maxSizeButtons);
-		exampleThreeBtn.setMaximumSize(maxSizeButtons);
-		exampleOwnBtn.setMaximumSize(maxSizeButtons);
+		generateBtn.setMaximumSize(maxSizeButtons);
 		
 		returnBtn.setFont(buttonFont);
 		cancelBtn.setFont(buttonFont);
 		calculateBtn.setFont(buttonFont);
-		exampleOneBtn.setFont(buttonFont);
-		exampleTwoBtn.setFont(buttonFont);
-		exampleThreeBtn.setFont(buttonFont);
-		exampleOwnBtn.setFont(buttonFont);
+		generateBtn.setFont(buttonFont);
 	}
 	
 	//zeigt das Panel
@@ -112,6 +91,16 @@ public class MainView extends JFrame{
 		//setzt die Sichtbarkeiten
 		mainPane.setVisible(true);
 		setVisible(true);
+		
+		if (calcCase.contains("Division")) {
+			showDivision();
+		}
+		else if (calcCase.contains("Bruchrechnung")) {
+			showFraction();
+		}
+		else if (calcCase.contains("Prozentrechnung")) {
+			showPercent();
+		}
 	}
 	
 	//Get-Methode für die Buttons
@@ -127,19 +116,28 @@ public class MainView extends JFrame{
 		return calculateBtn;
 	}
 	
-	public JButton getExampleOneBtn() {
-		return exampleOneBtn;
+	public JButton getGenerateBtn() {
+		return generateBtn;
 	}
 	
-	public JButton getExampleTwoBtn() {
-		return exampleTwoBtn;
+	//zeigt den jeweiligen JDialog und fügt die spezifischen Elemente dem Panel hinzu
+	public void showFraction() {
+		JOptionPane.showMessageDialog(this, "Hier befindest du dich in der Kategorie Brüche kürzen.\nDu kannst dir selbst eine Aufgabe "
+				+ "ausdenken oder eines der vorhandenen Beispiele nehmen.\nDie Brüche gehen bis zu einem Nenner von 20. "
+				+ "Es sind keine Sonderzeichen erlaubt.", "Allgemeine Information", JOptionPane.INFORMATION_MESSAGE, null);
 	}
 	
-	public JButton getExampleThreeBtn() {
-		return exampleThreeBtn;
+	public void showDivision() {
+		JOptionPane.showMessageDialog(this, "Hier befindest du dich in der Kategorie Division.\n"
+				+ "Du kannst dir selbst eine Aufgabe  ausdenken oder eines der vorhandenen Beispiele nehmen.\n"
+				+ "Die Division geht bis zu einem Teiler von 100. Außerdem sind auch hier nur ganze Zahlen erlaubt.\n"
+				+ "Es sind keine Sonderzeichen erlaubt.","Allgemeine Information", JOptionPane.INFORMATION_MESSAGE, null);
 	}
 	
-	public JButton getExampleOwnBtn() {
-		return exampleOwnBtn;
+	public void showPercent() {
+		JOptionPane.showMessageDialog(this, "Hier befindest du dich in der Kategorie Prozentrechnung.\n"
+				+ "Du kannst dir selbst eine Aufgabe  ausdenken oder eines der vorhandenen Beispiele nehmen.\n"
+				+ "Die Prozentrechnung ist für Ganze Zahlen von 1 bis 100.\n"
+				+ "Es sind keine Sonderzeichen wie erlaubt.","Allgemeine Information", JOptionPane.INFORMATION_MESSAGE, null);
 	}
 }
