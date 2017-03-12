@@ -11,12 +11,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class MainView extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-	private JPanel mainPane, upperPane, rightPane;
+	private JPanel mainPane, upperPane, rightPane, childPane;
 	private JButton returnBtn, cancelBtn, calculateBtn, generateBtn;
+	private JTextField firstNumber, secondNumber, result, fractionUpperFirst, fractionLowerFirst,
+						fractionUpperResult, fractionLowerResult, plusPane, equalsPane, percentPane, textPane;
+	private Dimension textFields = new Dimension(50,20);
 	
 	public MainView() {	
 		//erstellt alle sichtbaren Elemente
@@ -63,10 +69,27 @@ public class MainView extends JFrame{
 		rightPane = new JPanel();
 		rightPane.setLayout(new BoxLayout(rightPane, BoxLayout.PAGE_AXIS));
 		
+		childPane = new JPanel();
+		
 		returnBtn = new JButton("Zurück");
 		cancelBtn = new JButton("Löschen");
-		calculateBtn = new JButton("Berechnen");
+		calculateBtn = new JButton("Auswerten");
 		generateBtn = new JButton("Generieren");
+		
+		plusPane = new JTextField("+");
+		equalsPane = new JTextField("=");
+		percentPane = new JTextField("Wieviel % ?");
+		
+		firstNumber = new JTextField("");
+		secondNumber = new JTextField("");
+		result = new JTextField("");
+		
+		textPane = new JTextField("von");
+		
+		fractionUpperFirst = new JTextField("");
+		fractionLowerFirst = new JTextField("");
+		fractionUpperResult = new JTextField("");
+		fractionLowerResult = new JTextField("");
 		
 		//definiert die Buttons
 		Dimension maxSizeButtons = new Dimension(150, 40);
@@ -103,21 +126,100 @@ public class MainView extends JFrame{
 		}
 	}
 	
-	//Get-Methode für die Buttons
-	public JButton getReturnBtn() {
-		return returnBtn;
+	//Elemente für die jeweilige Operation
+	public void elementsForDivision() {
+		childPane = new JPanel();
+		upperPane.add(childPane);
+		
+		firstNumber.setPreferredSize(textFields);
+		plusPane.setPreferredSize(textFields);
+		secondNumber.setPreferredSize(textFields);
+		equalsPane.setPreferredSize(textFields);
+		result.setPreferredSize(textFields);
+		
+		plusPane.setHorizontalAlignment(SwingConstants.CENTER);
+		equalsPane.setHorizontalAlignment(SwingConstants.CENTER);
+		firstNumber.setHorizontalAlignment(SwingConstants.CENTER);
+		secondNumber.setHorizontalAlignment(SwingConstants.CENTER);
+		result.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		plusPane.setEditable(false);
+		equalsPane.setEditable(false);
+		
+		childPane.add(firstNumber);
+		childPane.add(plusPane);
+		childPane.add(secondNumber);
+		childPane.add(equalsPane);
+		childPane.add(result);
+		
+		childPane.revalidate();
+		childPane.repaint();
 	}
 	
-	public JButton getCancelBtn() {
-		return cancelBtn;
+	public void elementsForFraction() {
+		childPane = new JPanel();
+		upperPane.add(childPane);
+		
+		fractionUpperFirst.setPreferredSize(textFields);
+		fractionLowerFirst.setPreferredSize(textFields);
+		fractionUpperResult.setPreferredSize(textFields);
+		fractionLowerFirst.setPreferredSize(textFields);
+		equalsPane.setPreferredSize(textFields);
+		
+		fractionUpperFirst.setHorizontalAlignment(SwingConstants.CENTER);
+		fractionLowerFirst.setHorizontalAlignment(SwingConstants.CENTER);
+		fractionUpperResult.setHorizontalAlignment(SwingConstants.CENTER);
+		fractionLowerResult.setHorizontalAlignment(SwingConstants.CENTER);
+		equalsPane.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		childPane.add(fractionUpperFirst);
+		childPane.add(new JSeparator());
+		childPane.add(fractionLowerFirst);
+		
+		childPane.add(equalsPane);
+		
+		childPane.add(fractionUpperResult);
+		childPane.add(new JSeparator());
+		childPane.add(fractionLowerResult);
+		
+		childPane.revalidate();
+		childPane.repaint();
 	}
 	
-	public JButton getCalculateBtn() {
-		return calculateBtn;
+	public void elementsForPercent() {
+		childPane = new JPanel();
+		upperPane.add(childPane);
+
+		firstNumber.setPreferredSize(textFields);
+		percentPane.setPreferredSize(new Dimension(100, 20));
+		secondNumber.setPreferredSize(textFields);
+		result.setPreferredSize(textFields);
+		textPane.setPreferredSize(textFields);
+		
+		percentPane.setHorizontalAlignment(SwingConstants.CENTER);
+		firstNumber.setHorizontalAlignment(SwingConstants.CENTER);
+		secondNumber.setHorizontalAlignment(SwingConstants.CENTER);
+		result.setHorizontalAlignment(SwingConstants.CENTER);
+		textPane.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		percentPane.setEditable(false);
+		firstNumber.setEditable(false);
+		secondNumber.setEditable(false);
+		textPane.setEditable(false);
+		
+		childPane.add(firstNumber);
+		childPane.add(textPane);
+		childPane.add(secondNumber);
+		childPane.add(percentPane);
+		childPane.add(result);
+
+		childPane.revalidate();
+		childPane.repaint();
 	}
 	
-	public JButton getGenerateBtn() {
-		return generateBtn;
+	//Entfernt das Panel mit den Elementen der jeweiligen Operation
+	public void removeChildPanes() {
+		upperPane.remove(childPane);
 	}
 	
 	//zeigt den jeweiligen JDialog und fügt die spezifischen Elemente dem Panel hinzu
@@ -125,6 +227,7 @@ public class MainView extends JFrame{
 		JOptionPane.showMessageDialog(this, "Hier befindest du dich in der Kategorie Brüche kürzen.\nDu kannst dir selbst eine Aufgabe "
 				+ "ausdenken oder eines der vorhandenen Beispiele nehmen.\nDie Brüche gehen bis zu einem Nenner von 20. "
 				+ "Es sind keine Sonderzeichen erlaubt.", "Allgemeine Information", JOptionPane.INFORMATION_MESSAGE, null);
+		elementsForFraction();
 	}
 	
 	public void showDivision() {
@@ -132,6 +235,7 @@ public class MainView extends JFrame{
 				+ "Du kannst dir selbst eine Aufgabe  ausdenken oder eines der vorhandenen Beispiele nehmen.\n"
 				+ "Die Division geht bis zu einem Teiler von 100. Außerdem sind auch hier nur ganze Zahlen erlaubt.\n"
 				+ "Es sind keine Sonderzeichen erlaubt.","Allgemeine Information", JOptionPane.INFORMATION_MESSAGE, null);
+		elementsForDivision();
 	}
 	
 	public void showPercent() {
@@ -139,5 +243,55 @@ public class MainView extends JFrame{
 				+ "Du kannst dir selbst eine Aufgabe  ausdenken oder eines der vorhandenen Beispiele nehmen.\n"
 				+ "Die Prozentrechnung ist für Ganze Zahlen von 1 bis 100.\n"
 				+ "Es sind keine Sonderzeichen wie erlaubt.","Allgemeine Information", JOptionPane.INFORMATION_MESSAGE, null);
+		elementsForPercent();
 	}
+	
+	//Methode für den Cancel-Button
+	public void deleteAll() {
+		firstNumber.setText("");
+		secondNumber.setText("");
+		result.setText("");
+		
+		fractionUpperFirst.setText("");
+		fractionLowerFirst.setText("");
+		fractionUpperResult.setText("");
+		fractionLowerResult.setText("");
+	}
+	
+	//Get-Methoden
+		public JButton getReturnBtn() {
+			return returnBtn;
+		}
+		
+		public JButton getCancelBtn() {
+			return cancelBtn;
+		}
+		
+		public JButton getCalculateBtn() {
+			return calculateBtn;
+		}
+		
+		public JButton getGenerateBtn() {
+			return generateBtn;
+		}
+		
+		public JTextField getFirstNumber() {
+			return firstNumber;
+		}
+		
+		public JTextField getSecondNumer() {
+			return secondNumber;
+		}
+		
+		public JTextField getFractionUpperFirst() {
+			return fractionUpperFirst;
+		}
+		
+		public JTextField getFractionLowerFirst() {
+			return fractionLowerFirst;
+		}
+		
+		public void setResult(int submittedResult) {
+			result.setText(String.valueOf(submittedResult));
+		}
 }

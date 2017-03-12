@@ -34,6 +34,7 @@ public class Controller {
 		});
 		
 		main.getReturnBtn().addActionListener(listener -> returnToPreload());
+		main.getCancelBtn().addActionListener(listener -> main.deleteAll());
 	}
 	
 	//Methoden zum Zeigen des Panels
@@ -46,5 +47,6 @@ public class Controller {
 	public void returnToPreload() {
 		menu.setVisible(true);
 		main.setVisible(false);
+		main.removeChildPanes();
 	}
 }
