@@ -20,15 +20,16 @@ public class MainView extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JPanel mainPane, upperPane, rightPane, childPane;
 	private JButton returnBtn, cancelBtn, calculateBtn, generateBtn;
-	private JTextField firstNumber, secondNumber, result, fractionUpperFirst, fractionLowerFirst,
-						fractionUpperResult, fractionLowerResult, plusPane, equalsPane, percentPane, textPane;
+	private JTextField firstNumber, secondNumber, result, rest, fractionUpperFirst, fractionLowerFirst,
+						fractionUpperResult, fractionLowerResult, plusPane, equalsPane, restPane, 
+						percentPane, percentResult, textPane;
 	private Dimension textFields = new Dimension(50,20);
 	
 	public MainView() {	
 		//erstellt alle sichtbaren Elemente
 		createVisibles();
 		
-		//fügt dem Frame die Panel hinzu und den Paneln alle sichtbaren Elemente
+		//fÃ¼gt dem Frame die Panel hinzu und den Paneln alle sichtbaren Elemente
 		add(mainPane);
 		mainPane.add(upperPane, BorderLayout.CENTER);
 		upperPane.add(rightPane, BorderLayout.EAST);
@@ -76,13 +77,16 @@ public class MainView extends JFrame{
 		calculateBtn = new JButton("Auswerten");
 		generateBtn = new JButton("Generieren");
 		
-		plusPane = new JTextField("+");
+		plusPane = new JTextField("/");
 		equalsPane = new JTextField("=");
+		restPane = new JTextField("Rest");
 		percentPane = new JTextField("Wieviel % ?");
 		
 		firstNumber = new JTextField("");
 		secondNumber = new JTextField("");
 		result = new JTextField("");
+		percentResult = new JTextField("");
+		rest = new JTextField("");
 		
 		textPane = new JTextField("von");
 		
@@ -136,21 +140,29 @@ public class MainView extends JFrame{
 		secondNumber.setPreferredSize(textFields);
 		equalsPane.setPreferredSize(textFields);
 		result.setPreferredSize(textFields);
+		restPane.setPreferredSize(textFields);
+		rest.setPreferredSize(textFields);
+		
 		
 		plusPane.setHorizontalAlignment(SwingConstants.CENTER);
 		equalsPane.setHorizontalAlignment(SwingConstants.CENTER);
 		firstNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		secondNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		result.setHorizontalAlignment(SwingConstants.CENTER);
+		restPane.setHorizontalAlignment(SwingConstants.CENTER);
+		rest.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		plusPane.setEditable(false);
 		equalsPane.setEditable(false);
+		restPane.setEditable(false);
 		
 		childPane.add(firstNumber);
 		childPane.add(plusPane);
 		childPane.add(secondNumber);
 		childPane.add(equalsPane);
 		childPane.add(result);
+		childPane.add(restPane);
+		childPane.add(rest);
 		
 		childPane.revalidate();
 		childPane.repaint();
@@ -163,7 +175,7 @@ public class MainView extends JFrame{
 		fractionUpperFirst.setPreferredSize(textFields);
 		fractionLowerFirst.setPreferredSize(textFields);
 		fractionUpperResult.setPreferredSize(textFields);
-		fractionLowerFirst.setPreferredSize(textFields);
+		fractionLowerResult.setPreferredSize(textFields);
 		equalsPane.setPreferredSize(textFields);
 		
 		fractionUpperFirst.setHorizontalAlignment(SwingConstants.CENTER);
@@ -193,13 +205,13 @@ public class MainView extends JFrame{
 		firstNumber.setPreferredSize(textFields);
 		percentPane.setPreferredSize(new Dimension(100, 20));
 		secondNumber.setPreferredSize(textFields);
-		result.setPreferredSize(textFields);
+		percentResult.setPreferredSize(textFields);
 		textPane.setPreferredSize(textFields);
 		
 		percentPane.setHorizontalAlignment(SwingConstants.CENTER);
 		firstNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		secondNumber.setHorizontalAlignment(SwingConstants.CENTER);
-		result.setHorizontalAlignment(SwingConstants.CENTER);
+		percentResult.setHorizontalAlignment(SwingConstants.CENTER);
 		textPane.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		percentPane.setEditable(false);
@@ -211,7 +223,7 @@ public class MainView extends JFrame{
 		childPane.add(textPane);
 		childPane.add(secondNumber);
 		childPane.add(percentPane);
-		childPane.add(result);
+		childPane.add(percentResult);
 
 		childPane.revalidate();
 		childPane.repaint();
@@ -225,15 +237,15 @@ public class MainView extends JFrame{
 	//zeigt den jeweiligen JDialog und fügt die spezifischen Elemente dem Panel hinzu
 	public void showFraction() {
 		JOptionPane.showMessageDialog(this, "Hier befindest du dich in der Kategorie Brüche kürzen.\nDu kannst dir selbst eine Aufgabe "
-				+ "ausdenken oder eines der vorhandenen Beispiele nehmen.\nDie Brüche gehen bis zu einem Nenner von 20. "
-				+ "Es sind keine Sonderzeichen erlaubt.", "Allgemeine Information", JOptionPane.INFORMATION_MESSAGE, null);
+				+ "ausdenken oder eine Übungsaufgabe erstellen lassen.\nDie Brüche gehen bis zu einem Nenner von 25. "
+				+ "Es sind nur ganze Zahlen und keine Sonderzeichen erlaubt.", "Allgemeine Information", JOptionPane.INFORMATION_MESSAGE, null);
 		elementsForFraction();
 	}
 	
 	public void showDivision() {
-		JOptionPane.showMessageDialog(this, "Hier befindest du dich in der Kategorie Division.\n"
-				+ "Du kannst dir selbst eine Aufgabe  ausdenken oder eines der vorhandenen Beispiele nehmen.\n"
-				+ "Die Division geht bis zu einem Teiler von 100. Außerdem sind auch hier nur ganze Zahlen erlaubt.\n"
+		JOptionPane.showMessageDialog(this, "Hier befindest du dich in der Kategorie Division mit Rest.\n"
+				+ "Du kannst dir selbst eine Aufgabe  ausdenken oder eineein Beispielaufgabe erstellen lassen.\n"
+				+ "Die Division geht bis zu einem Dividenden von 100. Außerdem sind auch hier nur ganze Zahlen erlaubt.\n"
 				+ "Es sind keine Sonderzeichen erlaubt.","Allgemeine Information", JOptionPane.INFORMATION_MESSAGE, null);
 		elementsForDivision();
 	}
@@ -242,15 +254,31 @@ public class MainView extends JFrame{
 		JOptionPane.showMessageDialog(this, "Hier befindest du dich in der Kategorie Prozentrechnung.\n"
 				+ "Du kannst dir selbst eine Aufgabe  ausdenken oder eines der vorhandenen Beispiele nehmen.\n"
 				+ "Die Prozentrechnung ist für Ganze Zahlen von 1 bis 100.\n"
+				+ "Das Ergebnis muss auf zwei Dezimalstellen gerundet angegeben werden.\n"
 				+ "Es sind keine Sonderzeichen wie erlaubt.","Allgemeine Information", JOptionPane.INFORMATION_MESSAGE, null);
 		elementsForPercent();
 	}
+	
+	
+	public void showRight() {
+		JOptionPane.showMessageDialog(this, "Richtig!", "Auswertung", JOptionPane.INFORMATION_MESSAGE, null);
+	}
+	
+	public void showWrong() {
+		JOptionPane.showMessageDialog(this, "Leider falsch!" , "Auswertung", JOptionPane.INFORMATION_MESSAGE, null);
+	}
+	
+	
+	
+	
 	
 	//Methode für den Cancel-Button
 	public void deleteAll() {
 		firstNumber.setText("");
 		secondNumber.setText("");
 		result.setText("");
+		percentResult.setText("");
+		rest.setText("");
 		
 		fractionUpperFirst.setText("");
 		fractionLowerFirst.setText("");
@@ -258,7 +286,7 @@ public class MainView extends JFrame{
 		fractionLowerResult.setText("");
 	}
 	
-	//Get-Methoden
+	//Get- und Set-Methoden
 		public JButton getReturnBtn() {
 			return returnBtn;
 		}
@@ -279,7 +307,7 @@ public class MainView extends JFrame{
 			return firstNumber;
 		}
 		
-		public JTextField getSecondNumer() {
+		public JTextField getSecondNumber() {
 			return secondNumber;
 		}
 		
@@ -291,7 +319,55 @@ public class MainView extends JFrame{
 			return fractionLowerFirst;
 		}
 		
-		public void setResult(int submittedResult) {
-			result.setText(String.valueOf(submittedResult));
+		public JTextField getFractionUpperResult() {
+			return fractionUpperResult;
+		}
+		
+		public JTextField getFractionLowerResult() {
+			return fractionLowerResult;
+		}
+		
+		public JTextField getResult() {
+			return result;
+		}
+		
+		public JTextField getPercentResult() {
+			return percentResult;
+		}
+		
+		public JTextField getRest() {
+			return rest;
+		}
+		
+		public void setFirstNumber(int generatedFirstNumber) {
+			firstNumber.setText(String.valueOf(generatedFirstNumber));
+		}
+		
+		public void setSecondNumber(int generatedSecondNumber) {
+			secondNumber.setText(String.valueOf(generatedSecondNumber));
+		}
+		
+		public void setFractionUpperFirst(int generatedFractionUpperFirst) {
+			fractionUpperFirst.setText(String.valueOf(generatedFractionUpperFirst));
+		}
+		
+		public void setFractionLowerFirst(int generatedFractionLowerFirst) {
+			fractionLowerFirst.setText(String.valueOf(generatedFractionLowerFirst));
+		}
+		
+		public void setFractionUpperResult(int generatedFractionUpperResult) {
+			fractionUpperFirst.setText(String.valueOf(generatedFractionUpperResult));
+		}
+		
+		public void setFractionLowerResult(int generatedFractionLowerResult) {
+			fractionLowerFirst.setText(String.valueOf(generatedFractionLowerResult));
+		}
+		
+		public void setResult(int generatedResult) {
+			result.setText(String.valueOf(generatedResult));
+		}
+		
+		public void setPercentResult(double d) {
+			percentResult.setText(String.valueOf(d));
 		}
 }
