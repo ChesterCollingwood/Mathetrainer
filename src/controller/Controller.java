@@ -42,7 +42,7 @@ public class Controller {
 					main.showRight();
 				}
 				else {
-					main.showWrong();
+					main.showWrongDivision();
 				}
 			});
 		});
@@ -71,7 +71,7 @@ public class Controller {
 					main.showRight();
 				}
 				else {
-					main.showWrong();
+					main.showWrongFraction();
 				}
 				
 			});
@@ -99,7 +99,7 @@ public class Controller {
 					main.showRight();
 				}
 				else {
-					main.showWrong();
+					main.showWrongPercent();
 				}
 			});
 				
