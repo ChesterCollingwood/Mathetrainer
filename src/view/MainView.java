@@ -234,7 +234,7 @@ public class MainView extends JFrame{
 		upperPane.remove(childPane);
 	}
 	
-	//zeigt den jeweiligen JDialog und fügt die spezifischen Elemente dem Panel hinzu
+//zeigt den jeweiligen JDialog und fügt die spezifischen Elemente dem Panel hinzu
 	public void showFraction() {
 		JOptionPane.showMessageDialog(this, "Hier befindest du dich in der Kategorie Brüche kürzen.\nDu kannst dir selbst eine Aufgabe "
 				+ "ausdenken oder eine Übungsaufgabe erstellen lassen.\nDie Brüche gehen bis zu einem Nenner von 25. "
@@ -261,13 +261,25 @@ public class MainView extends JFrame{
 	
 	
 	public void showRight() {
-		JOptionPane.showMessageDialog(this, "Richtig!", "Auswertung", JOptionPane.INFORMATION_MESSAGE, null);
+		JOptionPane.showMessageDialog(this, "Richtig!\n","Auswertung", JOptionPane.INFORMATION_MESSAGE, null);
 	}
 	
-	public void showWrong() {
-		JOptionPane.showMessageDialog(this, "Leider falsch!" , "Auswertung", JOptionPane.INFORMATION_MESSAGE, null);
+	public void showWrongDivision() {
+		JOptionPane.showMessageDialog(this, "Leider falsch! \n"
+				+ "Denke an den Rechenweg: Versuche rauszufinden, wie oft der Divisor in den Dividenden passt,\n"
+				+ "sodass der Rest kleiner ist als der Divisor", "Auswertung", JOptionPane.INFORMATION_MESSAGE, null);
 	}
 	
+	public void showWrongFraction() {
+		JOptionPane.showMessageDialog(this, "Leider falsch! \n"
+				+ "Denke an den Rechenweg: Finde den größten gemeinsamen Teiler und teile anschließend sowohl Zähler als auch Nenner durch den ggT", "Auswertung", JOptionPane.INFORMATION_MESSAGE, null);
+	}
+	
+	public void showWrongPercent() {
+		JOptionPane.showMessageDialog(this, "Leider falsch! \n"
+				+ "Denke an den Rechenweg: Teile die erste Zahl durch die zweite Zahl und multipliziere das Ergebnis mit 100.\n"
+				+ "Runde dann auf zwei Dezimalstellen.", "Auswertung", JOptionPane.INFORMATION_MESSAGE, null);
+	}
 	
 	
 	
