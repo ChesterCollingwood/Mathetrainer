@@ -24,7 +24,8 @@ public class Controller {
 		menu.getDivisionBtn().addActionListener(e -> {
 			calcCase = "Division Üben";
 			showCalcFrame();
-		
+			main.deleteAll();
+			
 		//Erstellt bei pressen des Buttons eine neue Divisionsaufgabe
 			main.getGenerateBtn().addActionListener(f -> {
 				data.DivisionIni();
@@ -51,7 +52,8 @@ public class Controller {
 		menu.getFractionBtn().addActionListener(e -> {
 			calcCase = "Bruchrechnung Üben";
 			showCalcFrame();
-		
+			main.deleteAll();
+			
 		//Erstellt bei pressen des Buttons einen neuen Bruch
 			main.getGenerateBtn().addActionListener(f -> {
 				data.FractionIni();
@@ -82,6 +84,7 @@ public class Controller {
 		menu.getPercentBtn().addActionListener(e -> {
 			calcCase = "Prozentrechnung Üben";
 			showCalcFrame();
+			main.deleteAll();
 			
 		//Erstellt bei pressen des Buttons eine neue Prozentrechenraufgabe	
 			main.getGenerateBtn().addActionListener(f -> {
